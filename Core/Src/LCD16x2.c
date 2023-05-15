@@ -40,14 +40,14 @@ void LCD_SetCursor(unsigned char fila, unsigned char columna)
 {
     if(fila == 1)
     {
-        LCD_CMD(0x80 + (columna - 1)); //Debería funcionar pero IDK
+        LCD_CMD(0x80 + (columna - 1));
         DWT_Delay_us(40);
 
     }
 
     if(fila == 2)
     {
-    	LCD_CMD(0xC0 + (columna - 1)); //Ídem anterior
+    	LCD_CMD(0xC0 + (columna - 1));
     	DWT_Delay_us(40);
     }
 
@@ -88,8 +88,7 @@ void LCD_Init()
 	HAL_GPIO_Init(LCD16x2_CfgParam.LCD_GPIO, &GPIO_InitStruct);
 
 	// Inicializar display de acuerdo a la especificiación provista en DataSheet
-    //AYUDAME LOCOOOOOOOO
-	//Faltan los delays en todos lados la reconcha de la lora
+
 	HAL_GPIO_WritePin(LCD16x2_CfgParam.LCD_GPIO, LCD16x2_CfgParam.RS_PIN, 0);
 	DWT_Delay_ms(16); //Delay +15 ms
 	LCD_DATA(0x3); //Comando de config
@@ -99,20 +98,19 @@ void LCD_Init()
 	LCD_DATA(0x3); //Comando de config
 	LCD_DATA(0x2); //Comando de config
 
-	//Ahora viene lo bueno
 	LCD_CMD(0x2C);
 	LCD_CMD(0x8);
 	LCD_CMD(0x1);
 	LCD_CMD(0xE);
-	LCD_CMD(0x6); //Entry Mode Set - CHECKEAR
+	LCD_CMD(0x6); //Entry Mode Set
 	LCD_CMD(0x2); //Return home
 	DWT_Delay_ms(2);
 
 	//Init Done
 }
-void LCD_WriteChar(char Data) //El LCD opera en ASCII, así que en teoriiiiiiiiiiiiia debería funcionar así nomás
+void LCD_WriteChar(char Data) //El LCD opera en ASCII (con algunos cambios, no requiere conversión)
 {
-   // Puede usar HAL_GPIO_WritePin() <Author's comment: fuck you>
+   // Puede usar HAL_GPIO_WritePin()
 
 	char Low4, High4;
     Low4  = Data & 0x0F;
@@ -120,7 +118,7 @@ void LCD_WriteChar(char Data) //El LCD opera en ASCII, así que en teoriiiiiiiii
 
     HAL_GPIO_WritePin(LCD16x2_CfgParam.LCD_GPIO, LCD16x2_CfgParam.RS_PIN, 1);
 
-   	// Enviar nible alto
+   	// Enviar nibble alto
     LCD_DATA((High4>>4));
 
    	// Enviar nibble bajo

@@ -28,6 +28,6 @@ void LCD_DATA(unsigned char);   					// Enviar dato de 4 bits a display
 void LCD_SetCursor(unsigned char, unsigned char);  	// Setear posicion de cursor
 void LCD_WriteChar(char);        					// Escribir caracter en la posicion actual
 void LCD_WriteString(char*);     					// Escribir string a LCD
-void LCD_EN_PULSE();
+void LCD_EN_PULSE();								// Manda pulso en la línea EN
 
 #endif /* LCD16X2_H_ */
